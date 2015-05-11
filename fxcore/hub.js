@@ -35,8 +35,12 @@ function listmodules(callback) {
 	});
 	child.on('close', function(code) {
 		var err = null;
-		if (code != 0) {
-			err = code;
+		if (code == 127) {
+			err = 'Binary "pm" not present, or not found in PATH';
+		} else if (code != 0) {
+			err = "Error: " + code;
+		} else {
+			err = "Unknown error";
 		}
 		callback(err, text);
 	});
